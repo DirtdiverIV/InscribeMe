@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { EventsService } from 'src/app/service/events/events.service';
 import { Events } from '../../events/models/events.model';
 
@@ -7,23 +8,31 @@ import { Events } from '../../events/models/events.model';
   templateUrl: './detailscards.component.html',
   styleUrls: ['./detailscards.component.scss']
 })
-export class DetailscardsComponent implements OnInit{
+export class DetailscardsComponent implements OnInit {
 
-  eventsData: Events[] = [];
+  event: Events | undefined;
 
-  constructor(private eventsService: EventsService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private eventsService: EventsService
+  ) {}
 
   ngOnInit() {
-    this.fetchEventsData();
+    this.route.params.subscribe(params => {
+      const eventId = params['id'];
+      if (eventId) {
+        this.fetchEventData(eventId);
+      }
+    });
   }
 
-  fetchEventsData() {
-    this.eventsService.getEvents().subscribe(
-      (data: Events[]) => {
-        this.eventsData = data;
+  fetchEventData(eventId: string) {
+    this.eventsService.getEvent(eventId).subscribe(
+      (data: Events) => {
+        this.event = data;
       },
       (error) => {
-        console.log('Error fetching events data: ', error);
+        console.log('Error fetching event data: ', error);
       }
     );
   }

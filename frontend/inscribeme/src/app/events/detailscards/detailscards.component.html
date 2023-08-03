@@ -1,12 +1,16 @@
-<div class="container" *ngFor="let event of eventsData">
-    <h1 class="title">{{ event.name }}</h1>
-    <p class="date">{{ event.startingDate }}</p>
-    <div class="image-frame">
-      <img [src]="'../assets' + event.imgUrl">
-    </div>
-    <div class="attendance">
-      <p>Aforo actual: {{ event.insPeople }}/{{ event.maxPeople }}</p>
-    </div>
-    <p class="description">{{ event.description }}</p>
-    <button class="button">Join</button>
+<div id="main-div" class="container-fluid">
+<div class="card" style="width: 18rem;" *ngIf="event">
+  <img [src]="'../assets' + event.imgUrl" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ event.name }}</h5>
+    <p class="card-text">{{ event.description }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ event.startingDate }}</li>
+    <li class="list-group-item">{{ event.insPeople }}/{{ event.maxPeople }}</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="btn btn-primary">Unirse</a>
+  </div>
+</div>
 </div>
